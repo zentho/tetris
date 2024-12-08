@@ -29,7 +29,6 @@ board = [[0] * (W//S) for _ in range(H//S)]
 
 def collides(piece, board):
     shape, (x, y), color = piece
-
     for r, row in enumerate(shape):
         for c, cell in enumerate(row):
             if cell:
@@ -37,41 +36,62 @@ def collides(piece, board):
                 invalid_y = y + r < 0 or len(board) <= y + r
                 if invalid_x or invalid_y or board[y + r][x + c]:
                     return True
-
     return False
 
 
 def place(piece, board):
     shape, (x, y), color = piece
-
     for r, row in enumerate(shape):
         for c, cell in enumerate(row):
             if cell:
-                board[y + r][x + c] = color\
-
+                board[y + r][x + c] = color
 
 
 def clear(board):
     full_rows = [i for i, row in enumerate(board) if all(row)]
-
     for i in reversed(full_rows):
         del board[i]
-
     for _ in full_rows:
         board.insert(0, [0] * len(board[0]))
-
     return len(full_rows)
 
 
+normal_drop = 500
+fast_drop = 50
+
 drop = pygame.USEREVENT + 1
-pygame.time.set_timer(drop, 500)
+pygame.time.set_timer(drop, normal_drop)
 run = True
 
 while run:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             pygame.quit()
-        elif (e.type == pygame.KEYDOWN and e.key == pygame.K_DOWN) or e.type == drop:
+        elif e.type == pygame.KEYDOWN:
+            shape, (x, y), color = piece
+            orig_x, orig_shape = x, [row[:] for row in shape]
+
+            if e.key == pygame.K_DOWN:
+                pygame.time.set_timer(drop, fast_drop)
+            elif e.key == pygame.K_LEFT:
+                piece[1][0] -= 1
+                if collides(piece, board):
+                    piece[1][0] = orig_x
+            elif e.key == pygame.K_RIGHT:
+                piece[1][0] += 1
+                if collides(piece, board):
+                    piece[1][0] = orig_x
+            elif e.key == pygame.K_UP:
+                rotated_shape = list(zip(*shape[::-1]))
+                piece[0] = [list(row) for row in rotated_shape]
+                if collides(piece, board):
+                    piece[0] = orig_shape
+
+        elif e.type == pygame.KEYUP:
+            if e.key == pygame.K_DOWN:
+                pygame.time.set_timer(drop, normal_drop)
+
+        elif e.type == drop:
             piece[1][1] += 1
             if collides(piece, board):
                 piece[1][1] -= 1
@@ -82,21 +102,6 @@ while run:
                 piece = new_piece()
                 if collides(piece, board):
                     run = False
-        elif e.type == pygame.KEYDOWN:
-            shape, (x, y), color = piece
-            orig_x, orig_shape = x, [row[:] for row in shape]
-
-            if e.key == pygame.K_LEFT:
-                piece[1][0] -= 1
-            elif e.key == pygame.K_RIGHT:
-                piece[1][0] += 1
-            elif e.key == pygame.K_UP:
-                rotated_shape = list(zip(*shape[::-1]))
-                piece[0] = [list(row) for row in rotated_shape]
-
-            if collides(piece, board):
-                piece[1][0] = orig_x
-                piece[0] = orig_shape
 
     window.fill((0, 0, 0))
     grid_color = (50, 50, 50)
@@ -137,5 +142,4 @@ window.blit(game_over_text, ((W - game_over_text.get_width()) // 2, H//2 - 50))
 window.blit(score_text, ((W - score_text.get_width()) // 2, H//2))
 pygame.display.flip()
 pygame.time.delay(3000)
-
 pygame.quit()
