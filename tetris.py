@@ -132,7 +132,7 @@ while run:
     window.blit(score_text, (score_x, 10))
 
     pygame.display.flip()
-    clock.tick(30)
+    clock.tick(60)
 
 pygame.mixer.music.fadeout(1000)
 window.fill((0, 0, 0))
