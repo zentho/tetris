@@ -3,7 +3,7 @@ import random
 
 pygame.init()
 W, H, S = 400, 800, 40
-window = pygame.window.set_mode((W, H))
+window = pygame.display.set_mode((W, H))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Tetris")
 font = pygame.font.Font(None, 36)
