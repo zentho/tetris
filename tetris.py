@@ -107,7 +107,7 @@ while run:
             elif e.key == pygame.K_RIGHT:
                 piece[1][0] += 1
             elif e.key == pygame.K_UP:
-                rotated_shape = list(zip(shape[::-1]))
+                rotated_shape = list(zip(*shape[::-1]))
                 piece[0] = [list(row) for row in rotated_shape]
 
             if collides(piece, board):
