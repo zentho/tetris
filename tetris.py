@@ -1,5 +1,7 @@
 import pygame
 import random
+import os
+import sys
 
 pygame.init()
 W, H, S = 400, 800, 40
@@ -8,6 +10,17 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("Tetris")
 font = pygame.font.Font(None, 36)
 score = 0
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
+music_path = os.path.join(ASSETS_DIR, 'disfigure.mp3')
+
+try:
+    pygame.mixer.music.load(music_path)
+    pygame.mixer.music.set_volume(0.3)
+    pygame.mixer.music.play(-1)
+except pygame.error as e:
+    print(f"Unable to load or play music file: {e}")
 
 shapes = [
     [[1, 1, 1, 1]],
