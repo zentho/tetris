@@ -46,7 +46,7 @@ def collides(piece, board):
             if cell:
                 invalid_x = x + c < 0 or len(board[0]) <= x + c
                 invalid_y = y + r < 0 or len(board) <= y + r
-                if invalid_x or invalid_y:
+                if invalid_x or invalid_y or board[y + r][x + c]:
                     return True
 
     return False
