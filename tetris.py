@@ -61,3 +61,12 @@ def place(piece, board):
 
 
 def clear(board):
+    full_rows = [i for i, row in enumerate(board) if all(row)]
+
+    for i in reversed(full_rows):
+        del board[i]
+
+    for _ in full_rows:
+        board.insert(0, [0] * len(board[0]))
+
+    return len(full_rows)
