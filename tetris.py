@@ -6,6 +6,8 @@ W, H, S = 400, 800, 40
 window = pygame.window.set_mode((W, H))
 clock = pygame.time.Clock()
 pygame.display.set_caption("Tetris")
+font = pygame.font.Font(None, 36)
+score = 0
 
 shapes = [
     [[1, 1, 1, 1]],
