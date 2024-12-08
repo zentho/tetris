@@ -39,13 +39,12 @@ board = [[0] * (W//S) for _ in range(H//S)]
 
 
 def collides(piece, board):
-    shape, location, color = piece
-    x, y = location
+    shape, (x, y), color = piece
 
-    for r, row in shape:
-        for c, cell in row:
-            invalid_x = x + r < 0 or len(board[0]) <= x + r
-            invalid_y = y + c < 0 or len(board) <= y + c
+    for r, row in enumerate(shape):
+        for c, cell in enumerate(row):
+            invalid_x = x + c < 0 or len(board[0]) <= x + c
+            invalid_y = y + r < 0 or len(board) <= y + r
             if invalid_x or invalid_y or cell:
                 return True
 
@@ -53,8 +52,12 @@ def collides(piece, board):
 
 
 def place(piece, board):
-    pass
+    shape, (x, y), color = piece
+
+    for r, row in enumerate(shape):
+        for c, cell in enumerate(row):
+            if cell:
+                board[y + r][x + c] = color
 
 
 def clear(board):
-    pass
