@@ -109,17 +109,28 @@ while run:
                 piece[0] = orig_shape
 
     window.fill((0, 0, 0))
+    grid_color = (50, 50, 50)
+
+    for x_line in range(0, W, S):
+        pygame.draw.line(window, grid_color, (x_line, 0), (x_line, H))
+
+    for y_line in range(0, H, S):
+        pygame.draw.line(window, grid_color, (0, y_line), (W, y_line))
 
     for r, row in enumerate(board):
         for c, val in enumerate(row):
             if val:
-                pygame.draw.rect(window, val, (c*S, r*S, S, S), 0)
+                dimensions = (c*S, r*S, S, S)
+                pygame.draw.rect(window, val, dimensions, 0)
+                pygame.draw.rect(window, (0, 0, 0), dimensions, 1)
 
     shape, (x, y), color = piece
     for rr, row in enumerate(shape):
         for cc, val in enumerate(row):
             if val:
-                pygame.draw.rect(window, color, ((x+cc)*S, (y+rr)*S, S, S), 0)
+                dimensions = ((x+cc)*S, (y+rr)*S, S, S)
+                pygame.draw.rect(window, color, dimensions, 0)
+                pygame.draw.rect(window, (0, 0, 0), dimensions, 1)
 
     score_text = font.render(f"Score: {score}", True, (255, 255, 255))
     score_x = (W - score_text.get_width()) // 2
