@@ -1,6 +1,6 @@
 import pygame
 import random
-from constants import SHAPES, NEON_COLORS, MUSIC_PATH, CLEAR_SOUND_PATH
+from constants import SHAPES, NEON_COLORS, MUSIC_PATH, CLEAR_SOUND_PATH, ROTATE_SOUND_PATH, PLACE_SOUND_PATH
 
 pygame.init()
 W, H, S = 400, 800, 40
@@ -15,6 +15,8 @@ pygame.mixer.music.load(MUSIC_PATH)
 pygame.mixer.music.set_volume(0.3)
 pygame.mixer.music.play(-1)
 CLEAR_SOUND = pygame.mixer.Sound(CLEAR_SOUND_PATH)
+ROTATE_SOUND = pygame.mixer.Sound(ROTATE_SOUND_PATH)
+PLACE_SOUND = pygame.mixer.Sound(PLACE_SOUND_PATH)
 
 
 def new_piece():
@@ -84,6 +86,7 @@ while run:
                 piece[0] = [list(row) for row in rotated_shape]
                 if collides(piece, board):
                     piece[0] = orig_shape
+                ROTATE_SOUND.play()
 
         elif e.type == pygame.KEYUP:
             if e.key == pygame.K_DOWN:
@@ -101,6 +104,7 @@ while run:
                 piece = new_piece()
                 if collides(piece, board):
                     run = False
+                PLACE_SOUND.play()
 
     window.fill((0, 0, 0))
     grid_color = (50, 50, 50)
