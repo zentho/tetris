@@ -14,7 +14,7 @@ shapes = [
     [[0, 1, 1],
      [1, 1, 0]],
     [[1, 1, 0],
-     [0, 1, 1]]
+     [0, 1, 1]],
     [[0, 1, 0],
      [1, 1, 1]],
     [[1, 1, 1],
@@ -112,3 +112,25 @@ while run:
             if collides(piece, board):
                 piece[1][0] = orig_x
                 shape = orig_shape
+
+    window.fill((0, 0, 0))
+
+    for r, row in enumerate(board):
+        for c, val in enumerate(row):
+            if val:
+                pygame.draw.rect(window, val, (c*S, r*S, S, S), 0)
+
+    shape, (x, y), color = piece
+    for rr, row in enumerate(shape):
+        for cc, val in enumerate(row):
+            if val:
+                pygame.draw.rect(window, color, ((x+cc)*S, (y+rr)*S, S, S), 0)
+
+    score_text = font.render(f"Score: {score}", True, (255, 255, 255))
+    score_x = (W - score_text.get_width()) // 2
+    window.blit(score_text, (score_x, 10))
+
+    pygame.display.flip()
+    clock.tick(30)
+
+pygame.quit()
