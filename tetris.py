@@ -95,7 +95,7 @@ while run:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             run = False
-        elif (e.type == pygame.KEYDOWN and e.key == pygame.KEYDOWN) or e.type == drop:
+        elif (e.type == pygame.KEYDOWN and e.key == pygame.K_DOWN) or e.type == drop:
             handle_drop(board)
 
         elif e.type == pygame.KEYDOWN:
