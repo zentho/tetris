@@ -151,5 +151,13 @@ while run:
     pygame.display.flip()
     clock.tick(30)
 
+window.fill((0, 0, 0))
+game_over_text = font.render("Game Over", True, (255, 0, 0))
+score_text = font.render(f"Final Score: {score}", True, (255, 255, 255))
+window.blit(game_over_text, ((W - game_over_text.get_width()) // 2, H//2 - 50))
+window.blit(score_text, ((W - score_text.get_width()) // 2, H//2))
+pygame.display.flip()
+pygame.time.delay(3000)
+
 pygame.mixer.music.stop()
 pygame.quit()
