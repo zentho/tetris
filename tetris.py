@@ -1,6 +1,6 @@
 import pygame
 import random
-from constants import SHAPES, NEON_COLORS, MUSIC_PATH
+from constants import SHAPES, NEON_COLORS, MUSIC_PATH, CLEAR_SOUND_PATH
 
 pygame.init()
 W, H, S = 400, 800, 40
@@ -11,12 +11,10 @@ score = 0
 pygame.display.set_caption("Tetris")
 font = pygame.font.Font(None, 36)
 
-try:
-    pygame.mixer.music.load(MUSIC_PATH)
-    pygame.mixer.music.set_volume(0.3)
-    pygame.mixer.music.play(-1)
-except pygame.error as e:
-    print(f"Unable to load or play music file: {e}")
+pygame.mixer.music.load(MUSIC_PATH)
+pygame.mixer.music.set_volume(0.3)
+pygame.mixer.music.play(-1)
+CLEAR_SOUND = pygame.mixer.Sound(CLEAR_SOUND_PATH)
 
 
 def new_piece():
@@ -98,6 +96,7 @@ while run:
                 place(piece, board)
                 cleared = clear(board)
                 if cleared:
+                    CLEAR_SOUND.play()
                     score += cleared * 100
                 piece = new_piece()
                 if collides(piece, board):
