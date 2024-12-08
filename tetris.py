@@ -73,20 +73,6 @@ def clear(board):
     return len(full_rows)
 
 
-def handle_drop(board):
-    global piece, run, score
-    piece[1][1] += 1
-    if collides(piece, board):
-        piece[1][1] -= 1
-        place(piece, board)
-        cleared = clear(board)
-        if cleared:
-            score += cleared * 100
-        piece = new_piece()
-        if collides(piece, board):
-            run = False
-
-
 drop = pygame.USEREVENT + 1
 pygame.time.set_timer(drop, 500)
 run = True
@@ -96,8 +82,16 @@ while run:
         if e.type == pygame.QUIT:
             run = False
         elif (e.type == pygame.KEYDOWN and e.key == pygame.K_DOWN) or e.type == drop:
-            handle_drop(board)
-
+            piece[1][1] += 1
+            if collides(piece, board):
+                piece[1][1] -= 1
+                place(piece, board)
+                cleared = clear(board)
+                if cleared:
+                    score += cleared * 100
+                piece = new_piece()
+                if collides(piece, board):
+                    run = False
         elif e.type == pygame.KEYDOWN:
             shape, (x, y), color = piece
             orig_x, orig_shape = x, [row[:] for row in shape]
