@@ -1,7 +1,6 @@
 import pygame
 import random
 import os
-import sys
 
 pygame.init()
 W, H, S = 400, 800, 40
@@ -152,4 +151,5 @@ while run:
     pygame.display.flip()
     clock.tick(30)
 
+pygame.mixer.music.stop()
 pygame.quit()
