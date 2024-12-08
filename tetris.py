@@ -70,7 +70,7 @@ run = True
 while run:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
-            run = False
+            pygame.quit()
         elif (e.type == pygame.KEYDOWN and e.key == pygame.K_DOWN) or e.type == drop:
             piece[1][1] += 1
             if collides(piece, board):
@@ -129,6 +129,7 @@ while run:
     pygame.display.flip()
     clock.tick(30)
 
+pygame.mixer.music.fadeout(1000)
 window.fill((0, 0, 0))
 game_over_text = font.render("Game Over", True, (255, 0, 0))
 score_text = font.render(f"Final Score: {score}", True, (255, 255, 255))
@@ -137,5 +138,4 @@ window.blit(score_text, ((W - score_text.get_width()) // 2, H//2))
 pygame.display.flip()
 pygame.time.delay(3000)
 
-pygame.mixer.music.stop()
 pygame.quit()
