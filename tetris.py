@@ -112,7 +112,7 @@ while run:
 
             if collides(piece, board):
                 piece[1][0] = orig_x
-                shape = orig_shape
+                piece[0] = orig_shape
 
     window.fill((0, 0, 0))
 
