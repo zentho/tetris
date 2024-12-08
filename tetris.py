@@ -56,11 +56,11 @@ def clear(board):
     return len(full_rows)
 
 
-normal_drop = 500
-fast_drop = 50
+NORMAL_DROP = 500
+FAST_DROP = 50
 
 drop = pygame.USEREVENT + 1
-pygame.time.set_timer(drop, normal_drop)
+pygame.time.set_timer(drop, NORMAL_DROP)
 run = True
 
 while run:
@@ -72,7 +72,7 @@ while run:
             orig_x, orig_shape = x, [row[:] for row in shape]
 
             if e.key == pygame.K_DOWN:
-                pygame.time.set_timer(drop, fast_drop)
+                pygame.time.set_timer(drop, FAST_DROP)
             elif e.key == pygame.K_LEFT:
                 piece[1][0] -= 1
                 if collides(piece, board):
@@ -89,7 +89,7 @@ while run:
 
         elif e.type == pygame.KEYUP:
             if e.key == pygame.K_DOWN:
-                pygame.time.set_timer(drop, normal_drop)
+                pygame.time.set_timer(drop, NORMAL_DROP)
 
         elif e.type == drop:
             piece[1][1] += 1
