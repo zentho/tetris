@@ -22,3 +22,14 @@ shapes = [
     [[1, 1],
      [1, 1]]
 ]
+
+
+def random_color():
+    return [random.randint(50, 255), random.randint(50, 255), random.randint(50, 255)]
+
+
+def new_piece():
+    return [random.choice(shapes), [W//S//2-2, 1], random_color()]
+
+
+p = new_piece
