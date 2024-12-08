@@ -43,9 +43,10 @@ def collides(piece, board):
 
     for r, row in enumerate(shape):
         for c, cell in enumerate(row):
-            invalid_x = x + c < 0 or len(board[0]) <= x + c
-            invalid_y = y + r < 0 or len(board) <= y + r
-            if invalid_x or invalid_y or cell:
+            if cell:
+                invalid_x = x + c < 0 or len(board[0]) <= x + c
+                invalid_y = y + r < 0 or len(board) <= y + r
+                if invalid_x or invalid_y
                 return True
 
     return False
