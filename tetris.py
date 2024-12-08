@@ -1,49 +1,26 @@
 import pygame
 import random
-import os
+from constants import SHAPES, NEON_COLORS, MUSIC_PATH
 
 pygame.init()
 W, H, S = 400, 800, 40
 window = pygame.display.set_mode((W, H))
 clock = pygame.time.Clock()
-pygame.display.set_caption("Tetris")
-font = pygame.font.Font(None, 36)
 score = 0
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ASSETS_DIR = os.path.join(BASE_DIR, 'assets')
-music_path = os.path.join(ASSETS_DIR, 'disfigure.mp3')
+pygame.display.set_caption("Tetris")
+font = pygame.font.Font(None, 36)
 
 try:
-    pygame.mixer.music.load(music_path)
+    pygame.mixer.music.load(MUSIC_PATH)
     pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)
 except pygame.error as e:
     print(f"Unable to load or play music file: {e}")
 
-shapes = [
-    [[1, 1, 1, 1]],
-    [[0, 1, 1],
-     [1, 1, 0]],
-    [[1, 1, 0],
-     [0, 1, 1]],
-    [[0, 1, 0],
-     [1, 1, 1]],
-    [[1, 1, 1],
-     [0, 0, 1]],
-    [[1, 1, 1],
-     [1, 0, 0]],
-    [[1, 1],
-     [1, 1]]
-]
-
-
-def random_color():
-    return [random.randint(50, 255), random.randint(50, 255), random.randint(50, 255)]
-
 
 def new_piece():
-    return [random.choice(shapes), [W//S//2-2, 1], random_color()]
+    return [random.choice(SHAPES), [W//S//2-2, 1], random.choice(NEON_COLORS)]
 
 
 piece = new_piece()
@@ -70,7 +47,8 @@ def place(piece, board):
     for r, row in enumerate(shape):
         for c, cell in enumerate(row):
             if cell:
-                board[y + r][x + c] = color
+                board[y + r][x + c] = color\
+
 
 
 def clear(board):
