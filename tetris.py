@@ -82,6 +82,8 @@ def handle_drop(board):
         if cleared:
             score += cleared * 100
         piece = new_piece()
+        if collides(piece, board):
+            run = False
 
 
 drop = pygame.USEREVENT + 1
