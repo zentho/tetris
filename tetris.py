@@ -35,3 +35,4 @@ def new_piece():
 
 
 p = new_piece
+board = [[0] * (W//S) for _ in range(H//S)]
